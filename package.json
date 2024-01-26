@@ -24,6 +24,7 @@
         "@heroicons/react": "^2.1.1",
         "@uiw/react-json-view": "^2.0.0-alpha.12",
         "jquery": "^3.7.1",
+        "lodash": "^4.17.21",
         "react-daisyui": "^5.0.0",
         "react-data-table-component": "^7.6.2",
         "react-select": "^5.8.0",
