@@ -45,7 +45,7 @@ export default function Dashboard({ auth }) {
         // Menetapkan interval untuk memanggil fetchData setiap 2 detik
         const intervalId = setInterval(() => {
             fetchData();
-        }, 2000);
+        }, 5000);
 
         // Membersihkan interval pada saat komponen dilepas
         return () => clearInterval(intervalId);
@@ -73,7 +73,7 @@ export default function Dashboard({ auth }) {
         {
             name: "Nama KFA",
             selector: (row) => (row.dt_kfa != null ? row.dt_kfa.name : "-"),
-            width: "200px",
+            width: "300px",
         },
         // Uncomment the following section if you want to add the "Action" column
         /*
@@ -207,7 +207,7 @@ export default function Dashboard({ auth }) {
                 .then((response) => {
                     console.log(response); // Lakukan sesuatu dengan respons dari server (jika perlu)
                     const successMessages = response.data.messages;
-                    console.log(succesMessages);
+                    console.log(successMessages);
                     let succesMessageList = "<ul>";
                     successMessages.forEach((successMessage) => {
                         succesMessageList += `<li>${successMessage}</li>`;
@@ -223,6 +223,23 @@ export default function Dashboard({ auth }) {
                             container: "text-center", // Menambahkan kelas CSS untuk rata kiri
                         },
                     });
+                    setInputs([]);
+                    // setInputs((prevInputs) => {
+                    //     const remainingInput = prevInputs.slice(-1); // Sisakan satu form input
+                    //     return remainingInput;
+                    // });
+                    // setInputs((prevInputs) => {
+                    //     const remainingInput = prevInputs.slice(-1); // Sisakan satu form input
+                    //     const lastInput = remainingInput[0];
+                    //     return [
+                    //         ...remainingInput,
+                    //         {
+                    //             id: lastInput.id + 1,
+                    //             value: "", // Bersihkan nilai input
+                    //             kfa: lastInput.kfa, // Pertahankan nilai async select
+                    //         },
+                    //     ];
+                    // });
                 })
                 .catch((error) => {
                     console.error("Error:", error); // Tangani kesalahan (jika perlu)
@@ -284,19 +301,14 @@ export default function Dashboard({ auth }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 h-full">
-                            <h3 className="mb-5">Data</h3>
+                            <h3 className="mb-5">
+                                Data Farmakes IF & KFA Kemenkes
+                            </h3>
                             {inputs.map((input, index) => (
                                 <div
                                     key={index}
                                     className="mb-2 flex items-center"
                                 >
-                                    <label
-                                        htmlFor={`textInput_${input.id}`}
-                                        className="mr-2"
-                                    >
-                                        Data Farmakes IF:
-                                    </label>
-
                                     <input
                                         type="text"
                                         value={input.value}
@@ -325,12 +337,6 @@ export default function Dashboard({ auth }) {
                                         </datalist>
                                     )}
                                     {/* Pengecekan untuk memastikan tidak menampilkan tombol Remove jika hanya ada satu input */}
-                                    <label
-                                        htmlFor={`selectInput_${input.id}`}
-                                        className="mr-2"
-                                    >
-                                        Data KFA Kemenkes:
-                                    </label>
                                     <AsyncSelect
                                         className="w-3/6"
                                         isClearable
@@ -383,14 +389,18 @@ export default function Dashboard({ auth }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 h-full">
                             <h3>Hasil Mapping Farmakes di IF</h3>
-                            <DataTable
-                                columns={columns}
-                                data={data}
-                                pagination
-                                onChangePage={set_page}
-                                highlightOnHover
-                                customStyles={customStyles}
-                            />
+                            <div className="w-full overflow-auto max-h-screen">
+                                {" "}
+                                {/* Tambahkan kelas overflow-auto dan max-h-screen di sini */}
+                                <DataTable
+                                    columns={columns}
+                                    data={data}
+                                    pagination
+                                    onChangePage={set_page}
+                                    highlightOnHover
+                                    customStyles={customStyles}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
