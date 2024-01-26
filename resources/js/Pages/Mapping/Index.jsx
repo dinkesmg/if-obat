@@ -221,7 +221,7 @@ export default function Dashboard({ auth }) {
                 } else if (!name && selectedOption) {
                     const code = selectedOption.label.split(" ");
                     console.log(code);
-                    return { ...input, value: code[0] };
+                    return { ...input, value: selectedOption.label };
                 }
             }
             return input;
