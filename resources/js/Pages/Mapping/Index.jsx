@@ -195,27 +195,41 @@ export default function Dashboard({ auth }) {
         setInputs(updatedInputs);
     };
 
+    // const handleSelectChange = (selectedOption, action, inputId, name) => {
+    //     const updatedInputs = inputs.map((input) => {
+    //         if (input.id === inputId) {
+    //             if (name === "kfa_data") {
+    //                 return { ...input, kfa: selectedOption.code };
+    //             } else {
+    //                 const code = selectedOption.label.split(" ");
+    //                 console.log(code);
+    //                 return { ...input, value: code[0] };
+    //             }
+    //         } else {
+    //             return input;
+    //         }
+    //     });
+
+    //     setInputs(updatedInputs);
+    // };
+
     const handleSelectChange = (selectedOption, action, inputId, name) => {
         const updatedInputs = inputs.map((input) => {
             if (input.id === inputId) {
-                if (name === "kfa_data") {
+                if (name === "kfa_data" && selectedOption) {
                     return { ...input, kfa: selectedOption.code };
-                } else {
+                } else if (!name && selectedOption) {
                     const code = selectedOption.label.split(" ");
                     console.log(code);
                     return { ...input, value: code[0] };
                 }
-            } else {
-                return input;
             }
+            return input;
         });
 
         setInputs(updatedInputs);
     };
-    const handleSelectChangeKFA = (selectedOption, action, inputId) => {
-        const updatedInputs = [...get];
-        setInputs(updatedInputs);
-    };
+
     console.log(inputs);
     const handleSimpan = async () => {
         try {
