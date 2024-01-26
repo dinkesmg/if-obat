@@ -49,7 +49,8 @@ class KfaController extends Controller
                 // Ambil data dari paginasi
                 $data = KfaRef::query()
                     // ->where('jenis', '=', ucwords($request->tipe))
-                    ->select('jenis', 'kfa_code', 'nie', 'name', 'active_ingredients_kfa_code', 'product_template_kfa_code')
+                    // ->select('jenis', 'kfa_code', 'nie', 'name', 'active_ingredients_kfa_code', 'product_template_kfa_code')
+                    ->select('jenis', 'kfa_code', 'name',)
                     ->where('active', '=', 'true')
                     ->where('state', '=', 'valid')
                     ->where('name', 'like', '%' . $request->q . '%')

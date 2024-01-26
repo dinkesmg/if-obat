@@ -44,8 +44,8 @@ Route::prefix('farmakes')->as('farmakes.')->group(function () {
     Route::post('upload/data', [FarmakesController::class, 'uploadFarmakes'])->name('upload.data.proses');
 });
 Route::prefix('kfa')->as('kfa.')->group(function () {
-    // Route::get('api', [KfaController::class, 'apiFarmasi'])->name('api');
-    Route::get('api', [KfaController::class, 'api'])->name('api');
+    Route::get('api', [KfaController::class, 'apiFarmasi'])->name('api');
+    // Route::get('api', [KfaController::class, 'api'])->name('api');
     Route::get('/', [KfaController::class, 'index'])->name('list');
     Route::prefix('data')->as('data.')->group(function () {
         Route::get('full', [KfaController::class, 'kfaFullResp'])->name('full');
