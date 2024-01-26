@@ -130,24 +130,59 @@ export default function Dashboard({ auth }) {
             });
     }, []);
 
-    const loadOptions = (inputValue, callback) => {
-        axios
-            .get(`${kfaUrl}?q=${inputValue}`)
-            .then((response) => {
-                const resp = response.data.hasil;
-                if (resp.total > 0) {
-                    const options = resp.data.map((item) => ({
-                        label: `${item.kfa_code} - ${item.name}`,
-                        code: item.kfa_code,
-                        value: item.id,
-                    }));
-                    callback(options);
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching KFA data:", error);
-                callback([]);
+    // const loadOptions = (inputValue, callback) => {
+    //     axios
+    //         .get(`${kfaUrl}?q=${inputValue}`)
+    //         .then((response) => {
+    //             const resp = response.data.hasil;
+    //             if (resp.total > 0) {
+    //                 const options = resp.data.map((item) => ({
+    //                     label: `${item.kfa_code} - ${item.name}`,
+    //                     code: item.kfa_code,
+    //                     value: item.id,
+    //                 }));
+    //                 callback(options);
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching KFA data:", error);
+    //             callback([]);
+    //         });
+    // };
+    const loadOptions = async (inputValue, callback) => {
+        // Membuat CancelToken baru untuk setiap request
+        const cancelTokenSource = axios.CancelToken.source();
+
+        // Memeriksa apakah terdapat request sebelumnya dan membatalkannya
+        if (typeof cancelTokenSource.cancel === "function") {
+            cancelTokenSource.cancel("Previous request canceled");
+        }
+
+        try {
+            // Melakukan request dengan menggunakan cancelToken
+            const response = await axios.get(`${kfaUrl}?q=${inputValue}`, {
+                cancelToken: cancelTokenSource.token,
             });
+
+            const resp = response.data.hasil;
+            if (resp.total > 0) {
+                const options = resp.data.map((item) => ({
+                    label: `${item.kfa_code} - ${item.name}`,
+                    code: item.kfa_code,
+                    value: item.id,
+                }));
+                callback(options);
+            }
+        } catch (error) {
+            // Tangani kesalahan jika perlu
+            if (axios.isCancel(error)) {
+                console.log("Request canceled", error.message);
+            } else {
+                console.error("Error fetching KFA data:", error);
+            }
+
+            callback([]);
+        }
     };
 
     const handleAddInput = () => {
