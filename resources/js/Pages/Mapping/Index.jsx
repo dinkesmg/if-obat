@@ -10,8 +10,8 @@ export default function Dashboard({ auth }) {
     const [inputs, setInputs] = useState([{ id: 1, value: "", kfa: "" }]);
     const [dataList, setDataList] = useState([]);
     const farmakesUrl = window.location.origin + "/farmakes/data";
-    // const kfaUrl = window.location.origin + "/kfa/api";
-    const kfaUrl = "http://119.2.50.170:6536/satu-sehat/api/farmasi";
+    const kfaUrl = window.location.origin + "/kfa/api";
+    // const kfaUrl = "http://119.2.50.170:6536/satu-sehat/api/farmasi";
     const simpanUrl = window.location.origin + "/mapping/simpan";
 
     const [data, setData] = useState([]);
